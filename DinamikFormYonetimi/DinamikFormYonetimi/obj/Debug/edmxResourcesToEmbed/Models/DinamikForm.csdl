@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FormDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Field">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="required" Type="Boolean" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="dataType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="formId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Form" Relationship="Self.FK_Fields_Forms" FromRole="Fields" ToRole="Forms" />
+  </EntityType>
+  <EntityType Name="Form">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="createdAt" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="createdBy" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Fields" Relationship="Self.FK_Fields_Forms" FromRole="Forms" ToRole="Fields" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Forms_Users" FromRole="Forms" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Forms" Relationship="Self.FK_Forms_Users" FromRole="Users" ToRole="Forms" />
+  </EntityType>
+  <Association Name="FK_Fields_Forms">
+    <End Role="Forms" Type="Self.Form" Multiplicity="1" />
+    <End Role="Fields" Type="Self.Field" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Forms">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Fields">
+        <PropertyRef Name="formId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Forms_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Forms" Type="Self.Form" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Forms">
+        <PropertyRef Name="createdBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FormDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Fields" EntityType="Self.Field" />
+    <EntitySet Name="Forms" EntityType="Self.Form" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_Fields_Forms" Association="Self.FK_Fields_Forms">
+      <End Role="Forms" EntitySet="Forms" />
+      <End Role="Fields" EntitySet="Fields" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Forms_Users" Association="Self.FK_Forms_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Forms" EntitySet="Forms" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,356 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using DinamikFormYonetimi.Models;
+@model List<Form>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+    <style type="text/css">
+        form {
+            margin: 20px 0;
+        }
+
+            form input, button, select {
+                padding: 5px;
+            }
+
+        table {
+            width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #cdcdcd;
+        }
+
+            table th, table td {
+                padding: 10px;
+                text-align: left;
+            }
+    </style>
+
+
+    <style>
+        /* $blue: #1686d9; */
+
+
+
+        /*MODAL STARTS HERE */
+
+        .bg-modal {
+            background-color: rgba(0, 0, 0,0);
+            /*background-color:purple;*/
+            width: 90%;
+            height: 90%;
+            position: absolute;
+            top: 100px;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-contents {
+            height: 500px;
+            width: 800px;
+            background-color: gray;
+            /*text-align: center;*/
+            padding: 20px;
+            position: relative;
+            border-radius: 4px;
+        }
+
+        /*input,label,select {
+            margin: 15px auto;
+            display: block;
+            width: 50%;
+            padding: 8px;
+            border: 1px solid gray;
+        }*/
+
+        .close {
+            position: absolute;
+            top: 0;
+            right: 10px;
+            font-size: 50px;
+            color: red;
+            transform: rotate(45deg);
+            cursor: pointer;
+        }
+    </style>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $(".add-row").click(function () {
+
+                //alert("girdi");
+
+                if ($("#name").val() == '' || $("#type").val() == '') {
+                    alert("Lütfen alan adı ve tipi giriniz. ")
+                }
+                else {
+                    var name = $("#name").val();
+                    var type = $("#type").val();
+
+
+                    var required = document.getElementById("required").checked;
+                    var markup = "<tr><td>" + name + "</td><td>" + type + "</td><td>" + required + "</td></tr>";
+                    //alert("girdi");
+                    $("#table tbody").append(markup);
+
+
+                }
+
+
+            });
+
+            // //Find and remove selected table rows
+            //$(".delete-row").click(function () {
+            //    $("#table tbody").find('input[name="record"]').each(function () {
+            //        if ($(this).is(":checked")) {
+            //            $(this).parents("tr").remove();
+            //        }
+            //    });
+            //});
+
+            $(".add-form").click(function (e) {
+                e.preventDefault();
+
+                //alert("girdi");
+
+                var rowCount = $('#table tr').length;
+                //alert(rowCount);
+
+                if ($("#formName").val() == '' || $("#createdAt").val() == '' || rowCount <= 1
+                ) {
+                    alert("Lütfen tüm alanları doldurunuz");
+                }
+
+                else {
+
+                    var table = document.getElementById('table');
+                    var jsonArr = [];
+                    var formName = $("#formName").val();
+                    var description = $("#description").val();
+                    var createdAt = $("#createdAt").val();
+
+                    for (var i = 1, row; row = table.rows[i]; i++) {
+                        var col = row.cells;
+                        var jsonObj = {
+                            name: col[0].innerHTML,
+                            type: col[1].innerHTML,
+                            required: col[2].innerHTML
+                        }
+                        var str = col[0].innerHTML + "," + col[1].innerHTML + "," + col[2].innerHTML;
+
+                        jsonArr.push(str);
+
+
+                    }
+                    console.log(jsonArr);
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        url: "/Form/FormYonetim",
+                        traditional: true,
+                        data: {
+
+                            name: formName,
+                            description: description,
+                            createdAt: createdAt,
+                            fields: jsonArr
+                        },
+                        success: function () {
+                            alert("Form kaydedildi");
+                            window.location.replace("/Form/Index");
+                        },
+                        error: function () {
+                            //alert("Form kaydedilirken hata oluştu");
+                            window.location.replace("/Form/Index");
+                        },
+
+
+
+
+                    });
+
+                }
+
+            });
+
+
+
+        });
+    </script>
+
+
+
+</head>
+<body>
+
+    <!--Formların Listelendiği Bölüm-->
+    <div class="container">
+        <br />
+        <br />
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+        <br />
+        <br />
+        <a href="#" class="btn  btn-success rounded" id="button" role="button">Form Ekle</a>
+   
+
+        <h2>Form Listesi</h2>
+
+        <div class="table-responsive">
+
+            <table class="table" id="myTable">
+                <thead>
+                    <tr>
+
+                        <th>FormName</th>
+                        <th>Decsription</th>
+                        <th>CreatedAt</th>
+                        <th>Forma Veriler Ekleme</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    @foreach (Form frm in Model)
+                    {
+                        <tr>
+
+                            <td>@frm.name</td>
+                            <td>@frm.description</td>
+                            <td>@frm.createdAt</td>
+
+
+                            <td><a href="/Form/FormDataInput?frmID=@frm.id" class="btn btn-primary rounded">Veri Girişi</a></td>
+
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+    <!--Popup şeklinde açılan Form ekleme alanı-->
+    <div class="bg-modal">
+        <div class="modal-contents">
+
+            <div class="close">+</div>
+
+
+            <form>
+                <input type="text" id="formName" placeholder="Form Name">
+                <input type="text" id="description" placeholder="Description">
+                <input type="date" id="createdAt">
+            </form>
+
+
+            <form>
+                <input type="text" id="name" placeholder="Alan Adı">
+                @*<input type="text" id="type" placeholder="Tipi">*@
+
+                <select id="type">
+                    <option value="String">String</option>
+                    <option value="Number">Number</option>
+
+                </select>
+
+                <input type="checkbox" id="required">
+                <label>Boş Geçilebilir Mi?</label>
+                <input type="button" class="add-row btn btn-primary" value="Add Row">
+            </form>
+            <table id='table'>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            @*<button type="button" class="delete-row">Delete Row</button>*@
+            <button href="#" type="button" class="add-form btn btn-primary">Form Ekle</button>
+       
+
+            @*<span class="text-success">@ViewBag.Message</span>*@
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+@section scripts{
+
+    <!--Form ismine göre arama-->
+    <script>
+        function myFunction() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+
+
+    <!--Model açma,kapatma-->
+    <script>
+        document.getElementById('button').addEventListener("click", function () {
+            document.querySelector('.bg-modal').style.display = "flex";
+        });
+
+        document.querySelector('.close').addEventListener("click", function () {
+            document.querySelector('.bg-modal').style.display = "none";
+        });
+    </script>
+
+
+}
+
+
+

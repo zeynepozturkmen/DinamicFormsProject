@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FormDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Fields">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="required" Type="bit" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="dataType" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="formId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Forms">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="description" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="createdAt" Type="date" Nullable="false" />
+    <Property Name="createdBy" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Fields_Forms">
+    <End Role="Forms" Type="Self.Forms" Multiplicity="1" />
+    <End Role="Fields" Type="Self.Fields" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Forms">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Fields">
+        <PropertyRef Name="formId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Forms_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Forms" Type="Self.Forms" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Forms">
+        <PropertyRef Name="createdBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FormDBModelStoreContainer">
+    <EntitySet Name="Fields" EntityType="Self.Fields" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Forms" EntityType="Self.Forms" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Fields_Forms" Association="Self.FK_Fields_Forms">
+      <End Role="Forms" EntitySet="Forms" />
+      <End Role="Fields" EntitySet="Fields" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Forms_Users" Association="Self.FK_Forms_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Forms" EntitySet="Forms" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

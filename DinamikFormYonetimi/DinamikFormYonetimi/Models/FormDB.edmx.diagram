@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="36926b95c4ed48e395c60b6780470297" Name="Diagram1">
+        <EntityTypeShape EntityType="FormDBModel.aspnet_Applications" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormDBModel.aspnet_Membership" Width="1.5" PointX="6" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormDBModel.aspnet_Paths" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormDBModel.aspnet_PersonalizationAllUsers" Width="1.5" PointX="5.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormDBModel.aspnet_PersonalizationPerUser" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormDBModel.aspnet_Profile" Width="1.5" PointX="10.5" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormDBModel.aspnet_Roles" Width="1.5" PointX="3" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormDBModel.aspnet_SchemaVersions" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormDBModel.aspnet_Users" Width="1.5" PointX="8.25" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormDBModel.aspnet_WebEvent_Events" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormDBModel.Field" Width="1.5" PointX="12.75" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormDBModel.Form" Width="1.5" PointX="10.5" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormDBModel.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormDBModel.vw_aspnet_Applications" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormDBModel.vw_aspnet_MembershipUsers" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormDBModel.vw_aspnet_Profiles" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormDBModel.vw_aspnet_Roles" Width="1.5" PointX="7.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormDBModel.vw_aspnet_Users" Width="1.5" PointX="9.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormDBModel.vw_aspnet_UsersInRoles" Width="1.5" PointX="2.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormDBModel.vw_aspnet_WebPartState_Paths" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormDBModel.vw_aspnet_WebPartState_Shared" Width="1.5" PointX="11.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormDBModel.vw_aspnet_WebPartState_User" Width="1.5" PointX="11.75" PointY="6.75" IsExpanded="true" />
+        <AssociationConnector Association="FormDBModel.FK__aspnet_Me__Appli__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="FormDBModel.FK__aspnet_Pa__Appli__14270015" ManuallyRouted="false" />
+        <AssociationConnector Association="FormDBModel.FK__aspnet_Ro__Appli__01142BA1" ManuallyRouted="false" />
+        <AssociationConnector Association="FormDBModel.FK__aspnet_Us__Appli__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="FormDBModel.FK__aspnet_Me__UserI__6383C8BA" ManuallyRouted="false" />
+        <AssociationConnector Association="FormDBModel.FK__aspnet_Pe__PathI__19DFD96B" ManuallyRouted="false" />
+        <AssociationConnector Association="FormDBModel.FK__aspnet_Pe__PathI__1DB06A4F" ManuallyRouted="false" />
+        <AssociationConnector Association="FormDBModel.FK__aspnet_Pe__UserI__1EA48E88" ManuallyRouted="false" />
+        <AssociationConnector Association="FormDBModel.FK__aspnet_Pr__UserI__778AC167" ManuallyRouted="false" />
+        <AssociationConnector Association="FormDBModel.FK_Form_aspnet_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="FormDBModel.FK_Field_Form" ManuallyRouted="false" />
+        <AssociationConnector Association="FormDBModel.aspnet_UsersInRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
