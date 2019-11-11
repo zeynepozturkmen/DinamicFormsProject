@@ -16,7 +16,7 @@ namespace DinamikFormYonetimi.Controllers
         FormDBEntities db = new FormDBEntities();
 
     
-        //yorumm
+        //yorumm ekle
         public ActionResult Index()
         {
             //List<Form> frmList = db.Forms.ToList();
